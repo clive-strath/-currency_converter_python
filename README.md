@@ -1,12 +1,15 @@
 # Currency Converter
 
-A simple Python command-line currency converter that uses the FreeCurrencyAPI to get real-time exchange rates.
+A currency converter with both command-line and web interfaces that uses the FreeCurrencyAPI to get real-time exchange rates.
 
 ## Features
 
+- **Dual Interface**: Both command-line and modern web interface
 - Convert between 10 major currencies: USD, EUR, GBP, JPY, AUD, CAD, CHF, CNY, HKD, NZD
 - Real-time exchange rates from FreeCurrencyAPI
 - Interactive command-line interface
+- Beautiful, responsive web interface with TailwindCSS
+- Live exchange rates table
 - Error handling for API requests
 
 ## Prerequisites
@@ -28,10 +31,12 @@ source .venv/bin/activate
 
 3. Install required dependencies:
 ```bash
-pip install requests
+pip install -r requirements.txt
 ```
 
 ## Usage
+
+### Command-Line Interface
 
 Run the currency converter:
 
@@ -43,6 +48,30 @@ Or using the virtual environment directly:
 ```bash
 .venv/bin/python currency.py
 ```
+
+### Web Interface
+
+Start the web server:
+
+```bash
+python app.py
+```
+
+Or using the virtual environment:
+```bash
+.venv/bin/python app.py
+```
+
+Then open your browser and navigate to:
+```
+http://localhost:5000
+```
+
+The web interface provides:
+- Interactive currency converter with amount input
+- Live exchange rates table
+- Beautiful, responsive design
+- Real-time conversion results
 
 ### Example Interaction
 
@@ -103,7 +132,11 @@ API_KEY = "your_api_key_here"
 -currency_converter_python/
 ├── .venv/                 # Virtual environment
 ├── .git/                  # Git repository
-├── currency.py            # Main application
+├── templates/             # HTML templates for web interface
+│   └── index.html        # Main web interface template
+├── app.py                # Flask web application
+├── currency.py           # Command-line application
+├── requirements.txt      # Python dependencies
 └── README.md              # This documentation
 ```
 
@@ -111,9 +144,19 @@ API_KEY = "your_api_key_here"
 
 ### Functions
 
+#### Command-Line Application (`currency.py`)
 - `convert_currency(base)`: Fetches exchange rates for a given base currency
   - Parameters: `base` (str) - Base currency code
   - Returns: Dictionary of exchange rates or None on error
+
+#### Web Application (`app.py`)
+- `convert_currency(base, target=None, amount=1.0)`: Enhanced conversion function with amount and target currency
+  - Parameters: `base` (str) - Base currency code, `target` (str) - Target currency (optional), `amount` (float) - Amount to convert
+  - Returns: Dictionary of exchange rates or specific conversion result
+- Flask routes:
+  - `/`: Main web interface
+  - `/convert`: POST endpoint for currency conversion
+  - `/rates/<base_currency>`: GET endpoint for live exchange rates
 
 ### Main Loop
 
@@ -133,6 +176,7 @@ The application runs an infinite loop that:
 ## Dependencies
 
 - `requests`: HTTP library for making API calls
+- `Flask`: Web framework for the web interface
 
 ## License
 
